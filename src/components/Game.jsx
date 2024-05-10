@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Game = ({pokemon,startGame,checkAnswer,inputAnswer,score,answer}) => {
+const Game = ({pokemon,startGame,checkAnswer,inputAnswer,score,answer,idk,answerName,next,idkButton}) => {
   return (
     <>
         {startGame && (
@@ -12,22 +12,37 @@ const Game = ({pokemon,startGame,checkAnswer,inputAnswer,score,answer}) => {
             
             <div className='flex w-full'>
                 <div className='w-full flex flex-col items-center justify-center border-t-2 relative'>
-                    <h1 className='font-bold text-[4rem] absolute right-20 top-2 text-green-600'>{score}</h1>
-                    <small className='absolute right-24 top-20 text-lg'>score</small>
-                    <div>
-                        <img src= {pokemon?.sprites?.other?.home?.front_default} alt="pokemon" className='h-[350px] w-[350px]'/>
+                    <div className='absolute flex flex-col items-center justify-center right-[10px] top-0 sm:right-20 sm:top-2'>
+                        <h1 className='font-bold text-4xl sm:text-[4rem] text-green-600'>{score}</h1>
+                        <small className=' text-lg'>score</small>
+                    </div>
+                    <div className='mt-5'>
+                        <img src= {pokemon?.sprites?.other?.home?.front_default} alt="pokemon" className='sm:h-[350px] sm:w-[350px] h-[200px] w-[200px]'/>
+                        {answerName && (
+                            <h2 className='font-bold text-xl text-red-600 text-center'>{pokemon.name}</h2>
+                        )}
                     </div>
                     
-                    <div className="mt-10">
-                        <form onSubmit={checkAnswer}>
-                            <div> 
+                   
+                    <div className="mt-10 flex flex-col items-center">
+                        {idkButton && (
+                            <form onSubmit={checkAnswer}>
+                            <div className='flex flex-wrap items-center justify-center sm:flex-nowrap'> 
                                 <input type="text" className='w-[350px] h-10 rounded-full border-2  outline-none px-6 font-semibold border-blue-800' 
                                     onChange={inputAnswer} value={answer}
                                 />
-                            <button className='bg-blue-900 text-white px-4 py-2 rounded-full ml-2' type='submit'>OK</button>
+                            <button className='bg-blue-900 text-white px-4 py-2 rounded-full ml-2 mt-3 sm:mt-0' type='submit'>OK</button>
                             </div>
                         </form>
+                        )}
+                        
                        
+                       {idkButton && (
+                        <button className='bg-red-500 text-white mt-2 px-4 py-2 rounded-full ml-2' onClick={idk}>I don't know</button>
+                       )}
+                        {answerName && (
+                            <button className='bg-green-500 text-white mt-2 px-4 py-2 rounded-full ml-2' onClick={next}>Next</button>
+                        )}
                     </div>
                    
                 </div>

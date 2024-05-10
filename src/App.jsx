@@ -12,6 +12,7 @@ function App() {
 
   const [pokemon,setPokemon] = useState('')
   const [isloading,setIsLoading] = useState(false)
+  const [idkButton,setIdkButton] = useState(true)
 
   useEffect(() => {
     let abortController = new AbortController()
@@ -44,6 +45,9 @@ function App() {
 
   const [start, setStart] = useState(true)
   const [startGame,setStartGame] = useState(false)
+  const [answerName,setAnswerName] = useState(false)
+
+
 
   const isStart = () =>{
     setStart(!start)
@@ -61,7 +65,11 @@ function App() {
     event.preventDefault()
     if(answer.toLowerCase() === pokemon.name.toLowerCase()){
       setNumber(()=>Math.floor(Math.random()*1025)+11)
+      if(setAnswerName){
+        setScore(score=>score+10)
+      }else
       setScore(score => score+10)
+      setAnswerName(false)
       setAnswer('')
     }else{
       setScore(score => score-2)
@@ -69,11 +77,25 @@ function App() {
     }
   }
 
+  const idk = ()=>{
+    setAnswerName(true)
+    setIdkButton(false)
+    setScore(score => score-10)
+  }
+
+  const next = ()=>{
+    setAnswerName(false)
+    setIdkButton(true)
+    setAnswer('')
+    setNumber(()=>Math.floor(Math.random()*1025)+11)
+  }
   return (
     <>
       <Navbar/>
       <Start start={start} setStart={setStart} isStart={isStart} setStartGame={setStartGame}/>
-      <Game pokemon={pokemon} startGame={startGame} checkAnswer={checkAnswer} inputAnswer={inputAnswer} score={score} answer={answer}/>
+      <Game pokemon={pokemon} startGame={startGame} checkAnswer={checkAnswer} inputAnswer={inputAnswer} score={score} answer={answer}
+        idk={idk} answerName={answerName} next={next} idkButton={idkButton} 
+      />
   
     </>
   )
